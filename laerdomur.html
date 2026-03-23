@@ -197,7 +197,8 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
 </div>
 
 <script>
-const API_KEY = 'AIzaSyD4it8o1iU1fqleyI-7LciN28UwKl0yxN4';
+const AZURE_KEY = 'ByTwnfqhniSEhZYiDYJuCagduMi9kb9ZKno6jl5Lkq3wOEzwD0vaJQQJ99CCAC5RqLJXJ3w3AAAYACOGsmfc';
+const AZURE_REGION = 'westeurope';
 
 let lines = [];
 let currentIdx = 0;
@@ -311,25 +312,77 @@ function nextLine() {
   renderLine();
 }
 
-// ── TTS ────────────────────────────────────────────────
+// ── Azure TTS ─────────────────────────────────────────
 async function playLine() {
   if (speaking) return;
   speaking = true;
   setWave(true);
   setStatus('Les upphátt...', 'speaking');
 
-  // Female: higher pitch (+3), slightly slower
-  // Male: much lower pitch (-6), standard speed
-  const pitch = voiceGender === 'f' ? 1.5 : -5.0;
-  const rate = voiceGender === 'f' ? speechRate * 0.95 : speechRate * 1.0;
+  // Azure voice names for Icelandic
+  // Female: is-IS-GudrunNeural, Male: is-IS-GunnarNeural
+  const voiceName = voiceGender === 'f' ? 'is-IS-GudrunNeural' : 'is-IS-GunnarNeural';
+  const rate = Math.round((speechRate - 1) * 100); // Azure uses % e.g. +10% or -20%
+  const rateStr = rate >= 0 ? '+' + rate + '%' : rate + '%';
 
-  const waveNet = voiceGender==='f' ? 'is-IS-Wavenet-A' : 'is-IS-Wavenet-B';
-  const standard = voiceGender==='f' ? 'is-IS-Standard-A' : 'is-IS-Standard-B';
+  const ssml = `<speak version='1.0' xml:lang='is-IS'>
+    <voice name='${voiceName}'>
+      <prosody rate='${rateStr}'>
+        ${currentLineText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+      </prosody>
+    </voice>
+  </speak>`;
 
-  const tryVoice = async (vName) => {
-    const res = await fetch('https://texttospeech.googleapis.com/v1/text:synthesize?key=' + encodeURIComponent(API_KEY), {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
+  try {
+    const tokenRes = await fetch(
+      'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
+      { method: 'POST', headers: { 'Ocp-Apim-Subscription-Key': 'ByTwnfqhniSEhZYiDYJuCagduMi9kb9ZKno6jl5Lkq3wOEzwD0vaJQQJ99CCAC5RqLJXJ3w3AAAYACOGsmfc' } }
+    );
+    const token = await tokenRes.text();
+
+    const ttsRes = await fetch(
+      'https://westeurope.tts.speech.microsoft.com/cognitiveservices/v1',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/ssml+xml',
+          'X-Microsoft-OutputFormat': 'audio-16khz-128kbitrate-mono-mp3',
+          'User-Agent': 'leikrit-app'
+        },
+        body: ssml
+      }
+    );
+
+    if (ttsRes.ok) {
+      const blob = await ttsRes.blob();
+      const url = URL.createObjectURL(blob);
+      await playAudioUrl(url);
+      URL.revokeObjectURL(url);
+    } else {
+      const err = await ttsRes.text();
+      setStatus('Villa: ' + ttsRes.status, 'err');
+      console.error('Azure TTS villa:', err);
+    }
+  } catch(e) {
+    console.error(e);
+    setStatus('Tenging mistókst', 'err');
+  }
+
+  speaking = false;
+  setWave(false);
+  setStatus('Endurtaktu línuna', 'kid-turn');
+  document.getElementById('btn-next').disabled = false;
+}
+
+function playAudioUrl(url) {
+  return new Promise(resolve => {
+    const a = new Audio(url);
+    a.onended = resolve;
+    a.onerror = resolve;
+    a.play().catch(resolve);
+  });
+},
       body: JSON.stringify({
         input: {text: currentLineText},
         voice: {languageCode:'is-IS', name:vName},
@@ -359,13 +412,6 @@ async function playLine() {
   setStatus('Endurtaktu línuna', 'kid-turn');
 }
 
-function playMp3(b64) {
-  return new Promise(resolve => {
-    const a = new Audio('data:audio/mp3;base64,' + b64);
-    a.onended = resolve; a.onerror = resolve;
-    a.play().catch(resolve);
-  });
-}
 
 // ── Finish ─────────────────────────────────────────────
 function showFinish() {
