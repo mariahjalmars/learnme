@@ -197,8 +197,7 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
 </div>
 
 <script>
-const AZURE_KEY = 'ByTwnfqhniSEhZYiDYJuCagduMi9kb9ZKno6jl5Lkq3wOEzwD0vaJQQJ99CCAC5RqLJXJ3w3AAAYACOGsmfc';
-const AZURE_REGION = 'westeurope';
+const API_KEY = 'AIzaSyD4it8o1iU1fqleyI-7LciN28UwKl0yxN4';
 
 let lines = [];
 let currentIdx = 0;
@@ -312,57 +311,45 @@ function nextLine() {
   renderLine();
 }
 
-// ── Azure TTS ─────────────────────────────────────────
+// ── Google TTS ─────────────────────────────────────────
 async function playLine() {
   if (speaking) return;
   speaking = true;
   setWave(true);
   setStatus('Les upphátt...', 'speaking');
 
-  // Azure voice names for Icelandic
-  // Female: is-IS-GudrunNeural, Male: is-IS-GunnarNeural
-  const voiceName = voiceGender === 'f' ? 'is-IS-GudrunNeural' : 'is-IS-GunnarNeural';
-  const rate = Math.round((speechRate - 1) * 100); // Azure uses % e.g. +10% or -20%
-  const rateStr = rate >= 0 ? '+' + rate + '%' : rate + '%';
+  // Female: is-IS-Standard-A (pitch +1.5), Male: is-IS-Standard-B (pitch -5)
+  const voiceName = voiceGender === 'f' ? 'is-IS-Wavenet-A' : 'is-IS-Wavenet-B';
+  const stdVoice  = voiceGender === 'f' ? 'is-IS-Standard-A' : 'is-IS-Standard-B';
+  const pitch     = voiceGender === 'f' ? 1.5 : -5.0;
+  const rate      = speechRate || 1.0;
 
-  const ssml = `<speak version='1.0' xml:lang='is-IS'>
-    <voice name='${voiceName}'>
-      <prosody rate='${rateStr}'>
-        ${currentLineText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-      </prosody>
-    </voice>
-  </speak>`;
-
-  try {
-    const tokenRes = await fetch(
-      'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
-      { method: 'POST', headers: { 'Ocp-Apim-Subscription-Key': 'ByTwnfqhniSEhZYiDYJuCagduMi9kb9ZKno6jl5Lkq3wOEzwD0vaJQQJ99CCAC5RqLJXJ3w3AAAYACOGsmfc' } }
-    );
-    const token = await tokenRes.text();
-
-    const ttsRes = await fetch(
-      'https://westeurope.tts.speech.microsoft.com/cognitiveservices/v1',
+  const tryVoice = async (vName) => {
+    const res = await fetch(
+      'https://texttospeech.googleapis.com/v1/text:synthesize?key=' + encodeURIComponent(API_KEY),
       {
         method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/ssml+xml',
-          'X-Microsoft-OutputFormat': 'audio-16khz-128kbitrate-mono-mp3',
-          'User-Agent': 'leikrit-app'
-        },
-        body: ssml
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: {text: currentLineText},
+          voice: {languageCode: 'is-IS', name: vName},
+          audioConfig: {audioEncoding: 'MP3', speakingRate: rate, pitch: pitch}
+        })
       }
     );
+    return res.json();
+  };
 
-    if (ttsRes.ok) {
-      const blob = await ttsRes.blob();
-      const url = URL.createObjectURL(blob);
-      await playAudioUrl(url);
-      URL.revokeObjectURL(url);
+  try {
+    let data = await tryVoice(voiceName);
+    if (!data.audioContent) data = await tryVoice(stdVoice);
+    if (!data.audioContent && stdVoice === 'is-IS-Standard-B') data = await tryVoice('is-IS-Standard-A');
+    if (data.audioContent) {
+      await playAudioUrl(data.audioContent);
     } else {
-      const err = await ttsRes.text();
-      setStatus('Villa: ' + ttsRes.status, 'err');
-      console.error('Azure TTS villa:', err);
+      const msg = data.error && data.error.message ? data.error.message : 'Óþekkt villa';
+      setStatus('Villa: ' + msg, 'err');
+      console.error(data);
     }
   } catch(e) {
     console.error(e);
