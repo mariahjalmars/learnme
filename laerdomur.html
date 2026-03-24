@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Lærdómur">
 <title>Textalærdómur</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -16,7 +15,6 @@
   --border:rgba(90,70,50,0.12);--border2:rgba(90,70,50,0.22);
   --blue:#2B6CB0;--blue-bg:#EBF4FF;
   --green:#276749;--green-bg:#E6F4EC;
-  --amber:#92400E;--amber-bg:#FEF3C7;
   --purple:#553C9A;--purple-bg:#EBE5FF;
   --radius:16px;--radius-sm:10px;
 }
@@ -30,19 +28,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 h2{font-family:'Fraunces',serif;font-size:24px;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:-0.02em}
 h3{font-size:16px;font-weight:500;color:var(--text);margin-bottom:10px}
 p{font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:10px}
-.hint{font-size:13px;color:var(--text3);margin-top:4px;line-height:1.5}
-textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:monospace;line-height:1.7;outline:none;resize:vertical;min-height:160px}
-.file-drop{border:1.5px dashed var(--border2);border-radius:var(--radius-sm);padding:26px;text-align:center;cursor:pointer;transition:background 0.15s,border-color 0.15s;margin-bottom:12px}
-.file-drop:hover,.file-drop.dragover{background:var(--bg2);border-color:var(--blue)}
+textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:monospace;line-height:1.7;outline:none;resize:vertical;min-height:140px}
+.file-drop{border:1.5px dashed var(--border2);border-radius:var(--radius-sm);padding:22px;text-align:center;cursor:pointer;transition:background 0.15s;margin-bottom:12px}
+.file-drop:hover{background:var(--bg2)}
 .file-drop input{display:none}
 .file-loaded{font-size:14px;color:var(--green);font-weight:500;margin-top:8px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;font-size:16px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--card);color:var(--text);cursor:pointer;transition:background 0.15s,transform 0.1s;font-family:'DM Sans',sans-serif;white-space:nowrap}
 .btn:hover{background:var(--bg2)}.btn:active{transform:scale(0.97)}
 .btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;pointer-events:none}
-.btn-primary{background:var(--text);color:var(--bg);border-color:var(--text)}.btn-primary:hover{background:#3D342B}
-.btn-green{background:var(--green);color:white;border-color:var(--green)}.btn-green:hover{background:#1D4E38}
-.btn-blue{background:var(--blue);color:white;border-color:var(--blue)}.btn-blue:hover{background:#1A4A87}
-.btn-purple{background:var(--purple);color:white;border-color:var(--purple)}.btn-purple:hover{background:#3B2780}
+.btn-primary{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn-green{background:var(--green);color:white;border-color:var(--green)}
+.btn-blue{background:var(--blue);color:white;border-color:var(--blue)}
+.btn-purple{background:var(--purple);color:white;border-color:var(--purple)}
 .btn-full{width:100%}.btn-xl{padding:18px 28px;font-size:18px;border-radius:var(--radius)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .divider{height:0.5px;background:var(--border);margin:16px 0}
@@ -59,10 +56,9 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
 .progress-fill{height:100%;background:var(--text);border-radius:3px;transition:width 0.4s ease}
 .progress-label{display:flex;justify-content:space-between;margin-bottom:8px}
 .progress-label span{font-size:13px;color:var(--text3)}
-.stage{background:var(--card);border-radius:var(--radius);border:0.5px solid var(--border);padding:32px 24px;text-align:center;margin-bottom:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.stage.memo{border-top:4px solid var(--purple)}
+.stage{background:var(--card);border-radius:var(--radius);border:0.5px solid var(--border);border-top:4px solid var(--purple);padding:32px 24px;text-align:center;margin-bottom:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stage-num{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
-.stage-text{font-family:'Fraunces',serif;font-size:26px;font-weight:400;line-height:1.55;color:var(--text);transition:filter 0.3s}
+.stage-text{font-family:'Fraunces',serif;font-size:24px;font-weight:400;line-height:1.55;color:var(--text);transition:filter 0.3s}
 .stage-text.blurred{filter:blur(10px);user-select:none}
 .wave-row{display:flex;align-items:center;justify-content:center;gap:5px;height:44px;margin:8px 0}
 .wave-bar{width:5px;background:var(--purple);border-radius:3px;animation:wavePulse 0.7s ease-in-out infinite}
@@ -80,21 +76,15 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
 .finish-icon{font-size:64px;margin-bottom:14px}
 .finish-title{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin-bottom:10px}
 .finish-sub{font-size:16px;color:var(--text2)}
-.speed-row{margin-top:14px}
-.speed-row label{font-size:14px;color:var(--text2);font-weight:500;display:block;margin-bottom:6px}
-@media(max-width:480px){.stage-text{font-size:22px}.container{padding:16px 12px}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="topbar-title">📖 Textalærdómur</div>
   <div class="topbar-sub" id="topbar-sub">Veldu texta</div>
 </div>
-
 <div class="container">
 
-<!-- SCREEN 1: SETUP -->
 <div class="screen active" id="screen-setup">
   <div style="margin-bottom:20px">
     <h2>Hvernig viltu læra?</h2>
@@ -113,11 +103,10 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
         <div class="vbtn-label">Karl</div>
       </div>
     </div>
-    <div class="speed-row">
-      <label>Hraði — <span id="speed-label">eðlilegur (1.0)</span></label>
+    <div>
+      <label style="font-size:14px;color:var(--text2);font-weight:500;display:block;margin-bottom:6px">Hraði — <span id="speed-label">eðlilegur (1.0)</span></label>
       <input type="range" id="speed-slider" min="0.6" max="1.5" step="0.1" value="1.0"
-        oninput="updateSpeed(this.value)"
-        style="width:100%;accent-color:var(--text)">
+        oninput="updateSpeed(this.value)" style="width:100%;accent-color:var(--text)">
       <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:4px">
         <span>Hægt</span><span>Eðlilegt</span><span>Hratt</span>
       </div>
@@ -127,31 +116,30 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
   <div class="card" style="border:2px solid var(--green);background:var(--green-bg);margin-bottom:10px">
     <h3 style="color:var(--green)">🙏 Faðirvor</h3>
     <p style="color:var(--green);margin-bottom:14px">Þegar hlaðið inn — smelltu bara!</p>
-    <button class="btn btn-green btn-full btn-xl" onclick="startFadirvor()">Æfa Faðirvor</button>
+    <button class="btn btn-green btn-full btn-xl" onclick="startLines(FADIRVOR,'Faðirvor')">Æfa Faðirvor</button>
   </div>
-  <div class="card" style="border:2px solid var(--blue);background:var(--blue-bg);margin-bottom:10px">
+
+  <div class="card" style="border:2px solid var(--blue);background:var(--blue-bg);margin-bottom:16px">
     <h3 style="color:var(--blue)">✝️ Trúarjátning</h3>
     <p style="color:var(--blue);margin-bottom:14px">Þegar hlaðið inn — smelltu bara!</p>
-    <button class="btn btn-blue btn-full btn-xl" onclick="startTruarjatning()">Æfa Trúarjátning</button>
+    <button class="btn btn-blue btn-full btn-xl" onclick="startLines(TRUARJATNING,'Trúarjátning')">Æfa Trúarjátning</button>
   </div>
+
   <div class="card">
-    <h3>Texti til að læra</h3>
+    <h3>Eða hlaðaðu upp öðrum texta</h3>
     <div class="file-drop" id="file-drop" onclick="document.getElementById('file-input').click()">
       <input type="file" id="file-input" accept=".txt,.text"/>
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text3);margin-bottom:10px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text3);margin-bottom:8px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <div style="font-size:15px;color:var(--text2)">Veldu .txt skrá</div>
-      <div style="font-size:13px;color:var(--text3);margin-top:4px">eða dragðu hér</div>
     </div>
     <div id="file-loaded" style="display:none" class="file-loaded"></div>
     <div class="divider"></div>
     <p style="margin:0 0 8px;font-size:14px;color:var(--text2)">Eða límdu textann hér:</p>
-    <textarea id="paste-input" placeholder="Faðir vor, sem ert á himnum,&#10;helgist þitt nafn,&#10;til komi þitt ríki,&#10;verði þinn vilji..."></textarea>
+    <textarea id="paste-input" placeholder="Líma texta hér..."></textarea>
+    <button class="btn btn-primary btn-full" style="margin-top:12px" onclick="startFromText()">Byrja æfingu →</button>
   </div>
-
-  <button class="btn btn-primary btn-full btn-xl" onclick="startMemo()">Byrja æfingu →</button>
 </div>
 
-<!-- SCREEN 2: PRACTICE -->
 <div class="screen" id="screen-practice">
   <div class="progress-wrap">
     <div class="progress-label">
@@ -161,7 +149,7 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
     <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
   </div>
 
-  <div class="stage memo" id="stage">
+  <div class="stage" id="stage">
     <div class="stage-num" id="stage-num">Lína 1</div>
     <div class="stage-text blurred" id="stage-text">—</div>
   </div>
@@ -182,7 +170,7 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
 
   <div class="controls">
     <button class="btn btn-purple" onclick="replayLine()">
-      <svg width="15" height="15" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1.5l11 5.5-11 5.5z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1.5l11 5.5-11 5.5z"/></svg>
       Endurtaka
     </button>
     <button class="btn btn-green" onclick="revealLine()">Sýna línu</button>
@@ -190,14 +178,38 @@ textarea{width:100%;padding:12px 14px;font-size:14px;border:0.5px solid var(--bo
   </div>
 
   <div style="margin-top:28px;text-align:center">
-    <button class="btn" style="font-size:13px;padding:8px 16px;color:var(--text3)" onclick="showScreen('screen-setup','Veldu texta')">← Til baka</button>
+    <button class="btn" style="font-size:13px;padding:8px 16px;color:var(--text3)" onclick="goBack()">← Til baka</button>
   </div>
 </div>
 
 </div>
-
 <script>
 const API_KEY = 'AIzaSyD4it8o1iU1fqleyI-7LciN28UwKl0yxN4';
+
+const FADIRVOR = [
+  'Faðir vor, þú sem ert á himnum.',
+  'Helgist þitt nafn,',
+  'Til komi þitt ríki,',
+  'verði þinn vilji, svo á jörðu sem á himni.',
+  'Gef oss í dag vort daglegt brauð.',
+  'Fyrirgef oss vorar skuldir,',
+  'svo sem vér og fyrirgefum vorum skuldunautum.',
+  'Eigi leið þú oss í freistni, heldur frelsa oss frá illu.',
+  'Því að þitt er ríkið, mátturinn og dýrðin að eilífu, amen.'
+];
+
+const TRUARJATNING = [
+  'Ég trúi á Guð, föður almáttugan, skapara himins og jarðar.',
+  'Ég trúi á Jesú Krist, hans einkason, Drottinn vorn,',
+  'sem getinn er af heilögum anda, fæddur af Maríu mey,',
+  'píndur á dögum Pontíusar Pílatusar, krossfestur, dáinn og grafinn,',
+  'steig niður til heljar, reis á þriðja degi aftur upp frá dauðum,',
+  'steig upp til himna, situr við hægri hönd Guðs föður almáttugs',
+  'og mun þaðan koma að dæma lifendur og dauða.',
+  'Ég trúi á heilagan anda, heilaga almenna kirkju,',
+  'samfélag heilagra, fyrirgefningu syndanna,',
+  'upprisu mannsins og eilíft líf.'
+];
 
 let lines = [];
 let currentIdx = 0;
@@ -206,81 +218,62 @@ let voiceGender = 'f';
 let speechRate = 1.0;
 let currentLineText = '';
 
-// ── Voice/speed ────────────────────────────────────────
 function setVoice(g) {
   voiceGender = g;
-  const f = document.getElementById('vbtn-f');
-  const m = document.getElementById('vbtn-m');
-  f.className = 'vbtn' + (g==='f' ? ' sel-f' : '');
-  m.className = 'vbtn' + (g==='m' ? ' sel-m' : '');
+  document.getElementById('vbtn-f').className = 'vbtn' + (g==='f'?' sel-f':'');
+  document.getElementById('vbtn-m').className = 'vbtn' + (g==='m'?' sel-m':'');
 }
 
 function updateSpeed(v) {
   speechRate = parseFloat(v);
-  const labels = {'0.6':'mjög hægt','0.7':'hægt','0.8':'nokkuð hægt','0.9':'aðeins hægt','1.0':'eðlilegt','1.1':'aðeins hratt','1.2':'frekar hratt','1.3':'hratt','1.4':'mjög hratt','1.5':'hámark'};
-  const el = document.getElementById('speed-label');
-  if (el) el.textContent = (labels[parseFloat(v).toFixed(1)] || v) + ' (' + parseFloat(v).toFixed(1) + ')';
+  const map = {'0.6':'mjög hægt','0.7':'hægt','0.8':'nokkuð hægt','0.9':'aðeins hægt','1.0':'eðlilegt','1.1':'aðeins hratt','1.2':'frekar hratt','1.3':'hratt','1.4':'mjög hratt','1.5':'hámark'};
+  document.getElementById('speed-label').textContent = (map[parseFloat(v).toFixed(1)]||v) + ' (' + parseFloat(v).toFixed(1) + ')';
 }
 
-// ── File loading ───────────────────────────────────────
+// File loading
 const fileDrop = document.getElementById('file-drop');
 const fileInput = document.getElementById('file-input');
-fileDrop.addEventListener('dragover', e=>{e.preventDefault();fileDrop.classList.add('dragover');});
-fileDrop.addEventListener('dragleave', ()=>fileDrop.classList.remove('dragover'));
-fileDrop.addEventListener('drop', e=>{e.preventDefault();fileDrop.classList.remove('dragover');const f=e.dataTransfer.files[0];if(f)loadFile(f);});
+fileDrop.addEventListener('dragover', e=>{e.preventDefault();fileDrop.style.background='var(--bg2)';});
+fileDrop.addEventListener('dragleave', ()=>fileDrop.style.background='');
+fileDrop.addEventListener('drop', e=>{e.preventDefault();fileDrop.style.background='';if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
 fileInput.addEventListener('change', e=>{if(e.target.files[0])loadFile(e.target.files[0]);});
 
-function hasGarbled(t){return t.includes('\uFFFD')||/[ÃðþæöáéíóúýÐÞÆÖÁÉÍÓÚÝ]/.test(t);}
-function loadFile(f){
-  const tryRead=(enc,fb)=>{
-    const r=new FileReader();
-    r.onload=ev=>{
-      const t=ev.target.result;
-      if(fb&&hasGarbled(t)){tryRead(fb,null);return;}
-      document.getElementById('paste-input').value=t;
-      document.getElementById('file-loaded').style.display='block';
-      document.getElementById('file-loaded').textContent='✓ '+f.name+' hlaðið upp';
+function loadFile(f) {
+  const tryRead = (enc, fb) => {
+    const r = new FileReader();
+    r.onload = ev => {
+      const t = ev.target.result;
+      if (fb && (t.includes('\uFFFD') || /[Ã\x80-\x9F]/.test(t))) { tryRead(fb, null); return; }
+      document.getElementById('paste-input').value = t;
+      document.getElementById('file-loaded').style.display = 'block';
+      document.getElementById('file-loaded').textContent = '✓ ' + f.name;
     };
-    r.readAsText(f,enc);
+    r.readAsText(f, enc);
   };
-  tryRead('UTF-8','windows-1252');
+  tryRead('UTF-8', 'windows-1252');
 }
 
-// ── Start ──────────────────────────────────────────────
-// Textar baked in
-const FADIRVOR_LINES = ['Faðir vor, þú sem ert á himnum.','Helgist þitt nafn,','Til komi þitt ríki,','verði þinn vilji, svo á jörðu sem á himni.','Gef oss í dag vort daglegt brauð.','Fyrirgef oss vorar skuldir,','svo sem vér og fyrirgefum vorum skuldunautum.','Eigi leið þú oss í freistni, heldur frelsa oss frá illu.','Því að þitt er ríkið, mátturinn og dýrðin að eilífu, amen.'];
-const TRUARJATNING_LINES = ['Ég trúi á Guð, föður almáttugan, skapara himins og jarðar.','Ég trúi á Jesú Krist, hans einkason, Drottinn vorn,','sem getinn er af heilögum anda, fæddur af Maríu mey,','píndur á dögum Pontíusar Pílatusar, krossfestur, dáinn og grafinn,','steig niður til heljar, reis á þriðja degi aftur upp frá dauðum,','steig upp til himna, situr við hægri hönd Guðs föður almáttugs','og mun þaðan koma að dæma lifendur og dauða.','Ég trúi á heilagan anda, heilaga almenna kirkju,','samfélag heilagra, fyrirgefningu syndanna,','upprisu mannsins og eilíft líf.'];
+function startLines(arr, title) {
+  lines = arr;
+  currentIdx = 0;
+  speaking = false;
+  showScreen('screen-practice', title);
+  renderLine();
+}
 
-function startMemo() {
+function startFromText() {
   const raw = document.getElementById('paste-input').value.trim();
-  lines = raw ? raw.split('\n').map(l=>l.trim()).filter(Boolean) : FADIRVOR_LINES;
-  if (lines.length === 0) { alert('Enginn texti fannst.'); return; }
+  if (!raw) { alert('Settu inn texta fyrst!'); return; }
+  lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
   currentIdx = 0;
   speaking = false;
   showScreen('screen-practice', 'Æfing');
   renderLine();
 }
 
-function startFadirvor() {
-  lines = FADIRVOR_LINES;
-  currentIdx = 0;
-  speaking = false;
-  showScreen('screen-practice', 'Faðirvor');
-  renderLine();
-}
-
-function startTruarjatning() {
-  lines = TRUARJATNING_LINES;
-  currentIdx = 0;
-  speaking = false;
-  showScreen('screen-practice', 'Trúarjátning');
-  renderLine();
-}
-
-// ── Render ─────────────────────────────────────────────
 function renderLine() {
   if (currentIdx >= lines.length) { showFinish(); return; }
-  speaking = false; // always reset when showing new line
+  speaking = false;
   currentLineText = lines[currentIdx];
   const total = lines.length;
   const pct = Math.round((currentIdx / total) * 100);
@@ -288,12 +281,11 @@ function renderLine() {
   document.getElementById('prog-fill').style.width = pct + '%';
   document.getElementById('prog-label').textContent = 'Lína ' + (currentIdx+1) + ' / ' + total;
   document.getElementById('prog-pct').textContent = pct + '%';
-  const stageNum = document.getElementById('stage-num'); if(stageNum) stageNum.textContent = 'Lína ' + (currentIdx+1);
+  document.getElementById('stage-num').textContent = 'Lína ' + (currentIdx+1);
   document.getElementById('stage-text').textContent = currentLineText;
   document.getElementById('stage-text').classList.add('blurred');
   document.getElementById('wave-wrap').style.display = 'none';
   document.getElementById('btn-next').disabled = false;
-
   setStatus('Hlusta...', 'speaking');
   setTimeout(() => playLine(), 600);
 }
@@ -303,6 +295,7 @@ function revealLine() {
 }
 
 function replayLine() {
+  speaking = false;
   playLine();
 }
 
@@ -311,18 +304,15 @@ function nextLine() {
   renderLine();
 }
 
-// ── Google TTS ─────────────────────────────────────────
 async function playLine() {
   if (speaking) return;
   speaking = true;
   setWave(true);
   setStatus('Les upphátt...', 'speaking');
 
-  // Female: is-IS-Standard-A (pitch +1.5), Male: is-IS-Standard-B (pitch -5)
   const voiceName = voiceGender === 'f' ? 'is-IS-Wavenet-A' : 'is-IS-Wavenet-B';
   const stdVoice  = voiceGender === 'f' ? 'is-IS-Standard-A' : 'is-IS-Standard-B';
   const pitch     = voiceGender === 'f' ? 1.5 : -5.0;
-  const rate      = speechRate || 1.0;
 
   const tryVoice = async (vName) => {
     const res = await fetch(
@@ -333,7 +323,7 @@ async function playLine() {
         body: JSON.stringify({
           input: {text: currentLineText},
           voice: {languageCode: 'is-IS', name: vName},
-          audioConfig: {audioEncoding: 'MP3', speakingRate: rate, pitch: pitch}
+          audioConfig: {audioEncoding: 'MP3', speakingRate: speechRate, pitch: pitch}
         })
       }
     );
@@ -344,45 +334,6 @@ async function playLine() {
     let data = await tryVoice(voiceName);
     if (!data.audioContent) data = await tryVoice(stdVoice);
     if (!data.audioContent && stdVoice === 'is-IS-Standard-B') data = await tryVoice('is-IS-Standard-A');
-    if (data.audioContent) {
-      await playAudioUrl(data.audioContent);
-    } else {
-      const msg = data.error && data.error.message ? data.error.message : 'Óþekkt villa';
-      setStatus('Villa: ' + msg, 'err');
-      console.error(data);
-    }
-  } catch(e) {
-    console.error(e);
-    setStatus('Tenging mistókst', 'err');
-  }
-
-  speaking = false;
-  setWave(false);
-  setStatus('Endurtaktu línuna', 'kid-turn');
-  document.getElementById('btn-next').disabled = false;
-}
-
-function playAudioUrl(url) {
-  return new Promise(resolve => {
-    const a = new Audio(url);
-    a.onended = resolve;
-    a.onerror = resolve;
-    a.play().catch(resolve);
-  });
-},
-      body: JSON.stringify({
-        input: {text: currentLineText},
-        voice: {languageCode:'is-IS', name:vName},
-        audioConfig: {audioEncoding:'MP3', speakingRate:rate, pitch:pitch}
-      })
-    });
-    return res.json();
-  };
-
-  try {
-    let data = await tryVoice(waveNet);
-    if (!data.audioContent) data = await tryVoice(standard);
-    if (!data.audioContent && standard === 'is-IS-Standard-B') data = await tryVoice('is-IS-Standard-A');
     if (data.audioContent) {
       await playMp3(data.audioContent);
     } else {
@@ -399,18 +350,28 @@ function playAudioUrl(url) {
   setStatus('Endurtaktu línuna', 'kid-turn');
 }
 
+function playMp3(b64) {
+  return new Promise(resolve => {
+    const a = new Audio('data:audio/mp3;base64,' + b64);
+    a.onended = resolve;
+    a.onerror = resolve;
+    a.play().catch(resolve);
+  });
+}
 
-// ── Finish ─────────────────────────────────────────────
 function showFinish() {
-  const stage = document.getElementById('stage');
-  stage.className = 'stage';
-  stage.innerHTML = '<div class="finish-state"><div class="finish-icon">🌟</div><div class="finish-title">Frábært!</div><div class="finish-sub">Þú kláraðir allan textann!</div></div>';
+  document.getElementById('stage').innerHTML = '<div class="finish-state"><div class="finish-icon">🌟</div><div class="finish-title">Frábært!</div><div class="finish-sub">Þú kláraðir allan textann!</div></div>';
   document.getElementById('prog-fill').style.width = '100%';
   document.getElementById('prog-pct').textContent = '100%';
   document.getElementById('wave-wrap').style.display = 'none';
   document.querySelector('.memo-prompt').style.display = 'none';
   document.querySelector('.controls').style.display = 'none';
   setStatus('');
+}
+
+function goBack() {
+  speaking = false;
+  showScreen('screen-setup', 'Veldu texta');
 }
 
 function showScreen(id, label) {
@@ -425,6 +386,7 @@ function setStatus(msg, type) {
   el.textContent = msg;
   el.className = 'status' + (type ? ' '+type : '');
 }
+
 function setWave(on) {
   document.getElementById('wave-wrap').style.display = on ? 'block' : 'none';
   document.getElementById('wave-row').className = 'wave-row' + (on ? '' : ' idle');
